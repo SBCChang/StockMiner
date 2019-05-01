@@ -93,5 +93,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockDbContext\StockDbContext.csproj">
+      <Project>{c9a24b4b-063d-4331-9a97-f4d86680dace}</Project>
+      <Name>StockDbContext</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
