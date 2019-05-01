@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMiner", "StockMiner\StockMiner.csproj", "{2D2313BF-F15A-4A71-A410-A5A8FB14C5EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockDbContext", "StockDbContext\StockDbContext.csproj", "{C9A24B4B-063D-4331-9A97-F4D86680DACE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2D2313BF-F15A-4A71-A410-A5A8FB14C5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D2313BF-F15A-4A71-A410-A5A8FB14C5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D2313BF-F15A-4A71-A410-A5A8FB14C5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A24B4B-063D-4331-9A97-F4D86680DACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A24B4B-063D-4331-9A97-F4D86680DACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A24B4B-063D-4331-9A97-F4D86680DACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A24B4B-063D-4331-9A97-F4D86680DACE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
