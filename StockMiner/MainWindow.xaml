@@ -22,9 +22,9 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="同步股票">
                 <StackPanel VerticalAlignment="Center">
+                    <Label x:Name="lblStockNum" />
                     <WrapPanel>
-                        <Button Content="同步股票代號" />
-                        <Label />
+                        <Button Content="同步股票代號" x:Name="btnSyncStockNo" Click="btnSyncStockNo_Click" />
                     </WrapPanel>
                 </StackPanel>
             </GroupBox>

@@ -15,7 +15,7 @@ namespace StockMiner
         public WebCrawler(string url, string xPath)
         {
             Url = url;
-            XPath = XPath;
+            XPath = xPath;
         }
 
         public string Url { get; set; }

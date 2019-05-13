@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using StockMiner.Helper;
 
 namespace StockMiner
 {
@@ -20,9 +8,18 @@ namespace StockMiner
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private async void btnSyncStockNo_Click(object sender, RoutedEventArgs e)
+        {
+            lblStockNum.Content = "下載中...";
+            var stockNos = await StockSyncHelper.SyncStockNo();
+            lblStockNum.Content = $"全部股票: {stockNos.Count}";
+        }
+
     }
 }
