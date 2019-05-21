@@ -18,9 +18,9 @@ namespace StockMiner
             XPath = xPath;
         }
 
-        public string Url { get; set; }
+        public string Url { get; private set; }
 
-        public string XPath { get; set; }
+        public string XPath { get; private set; }
 
         public async Task<HtmlNode> GetSingleNode()
         {

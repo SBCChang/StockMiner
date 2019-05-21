@@ -1,14 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockDbContext.Model
 {
     public class StockBase
     {
 
-        public string StockNo { get; set; }
+        public int No { get; set; }
 
-        public string StockName { get; set; }
+        public string Name { get; set; }
 
+        [Column(TypeName = "Date")]
         public DateTime ListedDate { get; set; }
 
         public string Industry { get; set; }

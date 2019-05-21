@@ -1,32 +1,67 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
+using StockDbContext.Model;
+using StockMiner.Enum;
 
 namespace StockMiner.Helper
 {
     internal class StockSyncHelper
     {
 
-        internal async static Task<List<string>> SyncStockNo()
+        internal async static Task<List<StockBase>> SyncStockBase()
         {
-            var result = new List<string>();
+            var result = new List<StockBase>();
             var crawler = new WebCrawler("http://isin.twse.com.tw/isin/C_public.jsp?strMode=2", "/body[1]/table[2]/tr");
             var nodes = await crawler.GetMultiNodes();
 
             if (nodes != null)
             {
-                foreach (var node in nodes)
+                for (int row = 0; row < nodes.Count; row++)
                 {
-                    var item = node.InnerText.Trim().Replace("&nbsp;", "");
-
-                    int stockNo;
-                    if (item.Length > 4 && int.TryParse(item.Substring(0, 4), out stockNo) && item.Contains("ESVUFR"))
+                    if (nodes[row].ChildNodes.Count > 5 && nodes[row].ChildNodes[5].InnerText.Trim() == "ESVUFR")
                     {
-                        result.Add(stockNo.ToString());
+                        var stockBase = new StockBase() { Enabled = true };
+                        var targetRow = nodes[row];
+                        for (int column = 0; column < targetRow.ChildNodes.Count; column++)
+                        {
+                            UpdateStockBase(targetRow, stockBase, column);
+                        }
+                        result.Add(stockBase);
                     }
                 }
             }
             return result;
         }
 
+        private static void UpdateStockBase(HtmlNode targetRow, StockBase stockBase, int column)
+        {
+            switch (column)
+            {
+                case (int)StockBasePosition.NoAndName:
+                    var noAndName = targetRow.ChildNodes[column].InnerText.Trim().Split('　');
+                    int no;
+                    if (int.TryParse(noAndName[0], out no))
+                    {
+                        stockBase.No = no;
+                        stockBase.Name = noAndName[1];
+                    }
+                    break;
+                case (int)StockBasePosition.ListedDate:
+                    var date = targetRow.ChildNodes[column].InnerText.Trim();
+                    DateTime listedDate;
+                    if (DateTime.TryParse(date, out listedDate))
+                    {
+                        stockBase.ListedDate = listedDate;
+                    }
+                    break;
+                case (int)StockBasePosition.Industry:
+                    stockBase.Industry = targetRow.ChildNodes[column].InnerText.Trim();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
