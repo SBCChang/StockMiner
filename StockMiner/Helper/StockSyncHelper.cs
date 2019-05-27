@@ -10,28 +10,39 @@ namespace StockMiner.Helper
     internal class StockSyncHelper
     {
 
-        internal async static Task<List<StockBase>> SyncStockBase()
+        internal async static Task<bool> SyncStockBase()
         {
-            var result = new List<StockBase>();
+            var result = false;
             var crawler = new WebCrawler("http://isin.twse.com.tw/isin/C_public.jsp?strMode=2", "/body[1]/table[2]/tr");
             var nodes = await crawler.GetMultiNodes();
 
             if (nodes != null)
             {
-                for (int row = 0; row < nodes.Count; row++)
+                var stockBases = GetStockBases(nodes);
+                result = DbHelper.AddOrUpdateStockBases(stockBases);
+            }
+
+            return result;
+        }
+
+        private static List<StockBase> GetStockBases(HtmlNodeCollection nodes)
+        {
+            var result = new List<StockBase>();
+
+            for (int row = 0; row < nodes.Count; row++)
+            {
+                if (nodes[row].ChildNodes.Count > 5 && nodes[row].ChildNodes[5].InnerText.Trim() == "ESVUFR")
                 {
-                    if (nodes[row].ChildNodes.Count > 5 && nodes[row].ChildNodes[5].InnerText.Trim() == "ESVUFR")
+                    var stockBase = new StockBase() { Enabled = true };
+                    var targetRow = nodes[row];
+                    for (int column = 0; column < targetRow.ChildNodes.Count; column++)
                     {
-                        var stockBase = new StockBase() { Enabled = true };
-                        var targetRow = nodes[row];
-                        for (int column = 0; column < targetRow.ChildNodes.Count; column++)
-                        {
-                            UpdateStockBase(targetRow, stockBase, column);
-                        }
-                        result.Add(stockBase);
+                        UpdateStockBase(targetRow, stockBase, column);
                     }
+                    result.Add(stockBase);
                 }
             }
+
             return result;
         }
 
@@ -63,5 +74,6 @@ namespace StockMiner.Helper
                     break;
             }
         }
+
     }
 }

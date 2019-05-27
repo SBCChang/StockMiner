@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StockDbContext.Model;
 
 namespace StockMiner.Helper
@@ -6,10 +7,15 @@ namespace StockMiner.Helper
     internal class DbHelper
     {
 
-        internal bool AddOrUpdateStockBases(List<StockBase> stockBases)
+        internal static bool AddOrUpdateStockBases(List<StockBase> stockBases)
         {
 
             return false;
+        }
+
+        internal static List<StockBase> ReadStockBases()
+        {
+            throw new NotImplementedException();
         }
 
     }

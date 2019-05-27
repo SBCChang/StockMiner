@@ -16,9 +16,17 @@ namespace StockMiner
 
         private async void btnSyncStockNo_Click(object sender, RoutedEventArgs e)
         {
-            lblStockNum.Content = "下載中...";
-            var stockNos = await StockSyncHelper.SyncStockBase();
-            lblStockNum.Content = $"全部股票: {stockNos.Count}";
+            lblStockNumber.Content = "同步中";
+            var result = await StockSyncHelper.SyncStockBase();
+            if (result)
+            {
+                var stocks = DbHelper.ReadStockBases();
+                lblStockNumber.Content = $"全部股票: {stocks.Count}";
+            }
+            else
+            {
+                lblStockNumber.Content = "同步失敗";
+            }
         }
 
     }
